@@ -13,7 +13,7 @@ import re
 import os
 
 
-TRAEFIK_GROUP = "traefik.containo.us"
+TRAEFIK_GROUP = "traefik.io"
 TRAEFIK_VERSION = "v1alpha1"
 TRAEFIK_PLURAL = "ingressroutes"
 
