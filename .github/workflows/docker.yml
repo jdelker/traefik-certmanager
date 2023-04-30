@@ -9,8 +9,8 @@ on:
 
 # Certain actions will only run when this is the main repo.
 env:
-  MAIN_REPO: ncsa/traefik-certmanager
-  DOCKERHUB_ORG: ncsa
+  MAIN_REPO: jdelker/traefik-certmanager
+  DOCKERHUB_ORG: delker
   PLATFORM: "linux/amd64,linux/arm64"
 
 jobs:
