@@ -2,10 +2,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: traefik-certmanager
-  namespace: traefik
+  namespace: traefik-system
+
 ---
-kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
   name: traefik-certmanager
 rules:
@@ -15,25 +16,27 @@ rules:
 - apiGroups: ["cert-manager.io"]
   resources: ["certificates"]
   verbs: ["get", "create", "delete"]
+
 ---
-kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
   name: traefik-certmanager
 subjects:
 - kind: ServiceAccount
   name: traefik-certmanager
-  namespace: traefik
+  namespace: traefik-system
 roleRef:
   kind: ClusterRole
   name: traefik-certmanager
   apiGroup: rbac.authorization.k8s.io
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: traefik-certmanager
-  namespace: traefik
+  namespace: traefik-system
 spec:
   replicas: 1
   selector:
@@ -47,11 +50,11 @@ spec:
       serviceAccount: traefik-certmanager
       containers:
       - name: traefik-certmanager
-        image: kooper/traefik-certmanager
+        image: delker/traefik-certmanager
         imagePullPolicy: Always
         env:
         - name: ISSUER_NAME
-          value: letsencrypt
+          value: letsencrypt-issuer
         - name: ISSUER_KIND
           value: ClusterIssuer
         - name: CERT_CLEANUP
